@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Special Letter</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #0f0;
+      font-family: monospace;
+      margin: 0;
+      padding: 20px;
+      overflow: hidden;
+    }
+    #container {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      height: 100vh;
+      width: 100%;
+    }
+    #startButton {
+      background-color: #0f0;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+    #startButton:focus {
+      outline: none;
+    }
+    #message {
+      white-space: pre-wrap;
+      overflow: hidden;
+      border-left: 2px solid #0f0;
+      padding-left: 5px;
+      animation: blink 0.5s step-end infinite;
+    }
+    @keyframes blink {
+      50% {
+        border-color: transparent;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <button id="startButton">Are you ready ba?</button>
+    <div id="message"></div>
+  </div>
+  <script>
+    const button = document.getElementById("startButton");
+    const message = document.getElementById("message");
+
+    const textToType = `To the person I met online, thank you for being such an amazing part of my 2024. From playing every day to late-night calls, you've brought so much fun and excitement into my life. Even though we only met this year, it feels like we've known each other for so much longer. The time we've spent together, laughing, playing, and sharing moments, has made this year more memorable than I couldve imagined.
+You've truly made a mark in my life, and I'm grateful for the friendship we've built. I'm excited for more moments ahead, more games, more calls, more movies/kdramas to watch, and more memories we can create together. Ket ilang beses na disgrasya na ako, still glad to be alive, Thank you for being someone I can look forward to talking to, and for making my 2024 brighter and better with your presence. Sana di to last letter ko HAHAHAHA bata pa ako I don't want to die pero, Thank you Crizle Acosta <3
+
+
+Yes I knew your name, HAHAHAHA still conptemplating in making this, I know nga pag nakita muna ako, parang "ay hala ganito pala muhka mo", "ang payat mo", ganun so yeah, Happy New year!! - Nemar Adial 
+
+re-reveal ko maya pano ko nakuha name mo, actually tagal ko na alam yung name mo, nung pumunta ka dito sa Dumaguete, if ever galit ka wag ka mang ghost masama yun.`;
+    const typingSpeed = 50; // Speed of typing (ms per character)
+    const errorChance = 0.1; // 10% chance of making a mistake
+    const errorDelay = 100; // Delay for fixing errors (ms)
+
+    button.addEventListener("click", () => {
+      button.style.display = "none";
+      typeText(textToType);
+    });
+
+    async function typeText(text) {
+      let typedText = "";
+      for (let i = 0; i < text.length; i++) {
+        const isError = Math.random() < errorChance && text[i] !== " "; // Randomly decide to make an error
+
+        if (isError) {
+          typedText += getRandomChar();
+          updateMessage(typedText);
+          await sleep(errorDelay); // Pause to simulate correcting the error
+          typedText = typedText.slice(0, -1); // Remove the wrong character
+        }
+
+        typedText += text[i];
+        updateMessage(typedText);
+        await sleep(typingSpeed);
+      }
+    }
+
+    function updateMessage(content) {
+      message.textContent = content;
+    }
+
+    function getRandomChar() {
+      const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()";
+      return chars[Math.floor(Math.random() * chars.length)];
+    }
+
+    function sleep(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    }
+  </script>
+</body>
+</html>
